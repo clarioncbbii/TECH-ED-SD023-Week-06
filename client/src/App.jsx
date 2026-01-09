@@ -19,7 +19,8 @@ function App() {
   // - fetch data from the API
   useEffect(() => {
     async function getData() {
-      // const response = await fetch("https://week-6-api.vercel.app/api/images");
+      //* for week 6 API: const response = await fetch("https://week-6-api.vercel.app/api/images");
+      //* using the Unsplash API required changes to parts of the code below (pertaining to where the image src is situated)
       const response = await fetch(
         `${
           import.meta.env.VITE_UNSPLASH_API_URL
@@ -59,7 +60,9 @@ function App() {
   }
 
   function buttonNext() {
-    //* What does the next button do: ...
+    //* What does the next button do: When i click a button, I want the current image to move one step forward in the queue of images
+    //* meaning the image index needs to increase by one, until it hits the upper limit (max index no.), at which point I want it to loop back to the beginning
+    //* this means that the image index needs to return to zero which is the lowest possible number (the starting point of the array)
     // if currentImageIndex + 1 > images.length -1 setCurrentImageIndex(0)
     //set currentImageIndex to currentImageIndex + 1
     if (currentImageIndex + 1 > images.length - 1) {
