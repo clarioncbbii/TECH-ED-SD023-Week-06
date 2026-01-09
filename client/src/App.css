@@ -62,6 +62,7 @@ button.image-button {
   height: 10vh;
   object-fit: cover;
   z-index: 100;
+  gap: 1rem;
 }
 
 @media (width <= 600px) {

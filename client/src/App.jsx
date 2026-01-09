@@ -21,12 +21,14 @@ function App() {
     async function getData() {
       // const response = await fetch("https://week-6-api.vercel.app/api/images");
       const response = await fetch(
-        `${import.meta.env.VITE_UNSPLASH_API_URL}&query=cherry-blossoms`
+        `${
+          import.meta.env.VITE_UNSPLASH_API_URL
+        }&query=cherry-blossoms-flowers&per_page=20`
       );
       const data = await response.json();
       // - once fetched, put it in state
-      setImages(data);
-      console.log(data);
+      setImages(data.results);
+      console.log(data.results);
     }
 
     getData();
