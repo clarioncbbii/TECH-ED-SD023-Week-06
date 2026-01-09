@@ -32,8 +32,10 @@ function App() {
   // - when a user clicks an image
   // - when a user presses a button that should switch the image (left and right)
 
-  function clickThumbnail() {
-    console.log("I was cliqued.");
+  function clickThumbnail(i) {
+    //* when I click on the thumbnail in the thumbbnail container, I want the image I clicked on to be displayed in the fullscreen container
+    // the index of the fullscreen image needs to be the same as the index of the thumbnail image clicked
+    setCurrentImageIndex(i);
   }
 
   function buttonPrev() {
@@ -61,17 +63,18 @@ function App() {
     }
   }
 
-  //! IF USING UNSPLASH API - THE WAY I ACCESS IMAGE DATA CHANGES - line 71/80/81
+  //! IF USING UNSPLASH API - THE WAY I ACCESS IMAGE DATA CHANGES - at lines 79/88/89
 
   return (
     <>
       <section className="thumbnail-container">
-        {images.map((image) => {
+        {/* images.indexOf(image) --> alternative method */}
+        {images.map((image, index) => {
           return (
             <button
               className="image-button"
               key={image.id}
-              onClick={clickThumbnail}
+              onClick={() => clickThumbnail(index)}
             >
               <img src={image.url} alt={image.alt} />
             </button>
