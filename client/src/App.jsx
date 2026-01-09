@@ -19,10 +19,14 @@ function App() {
   // - fetch data from the API
   useEffect(() => {
     async function getData() {
-      const response = await fetch("https://week-6-api.vercel.app/api/images");
+      // const response = await fetch("https://week-6-api.vercel.app/api/images");
+      const response = await fetch(
+        `${import.meta.env.VITE_UNSPLASH_API_URL}&query=cherry-blossoms`
+      );
       const data = await response.json();
       // - once fetched, put it in state
       setImages(data);
+      console.log(data);
     }
 
     getData();
@@ -53,7 +57,7 @@ function App() {
   }
 
   function buttonNext() {
-    //* What does the next button do:
+    //* What does the next button do: ...
     // if currentImageIndex + 1 > images.length -1 setCurrentImageIndex(0)
     //set currentImageIndex to currentImageIndex + 1
     if (currentImageIndex + 1 > images.length - 1) {
@@ -62,8 +66,6 @@ function App() {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   }
-
-  //! IF USING UNSPLASH API - THE WAY I ACCESS IMAGE DATA CHANGES - at lines 79/88/89
 
   return (
     <>
@@ -76,7 +78,7 @@ function App() {
               key={image.id}
               onClick={() => clickThumbnail(index)}
             >
-              <img src={image.url} alt={image.alt} />
+              <img src={image.urls.thumb} alt={image.alt_description} />
             </button>
           );
         })}
@@ -85,8 +87,8 @@ function App() {
         {/* wrapped in a conditional bc we're checking images.length is not zero - when it is zero we have not received data from the API */}
         {images.length && (
           <img
-            src={images[currentImageIndex].url}
-            alt={images[currentImageIndex].alt}
+            src={images[currentImageIndex].urls.regular}
+            alt={images[currentImageIndex].alt_description}
           />
         )}
       </section>
