@@ -13,7 +13,7 @@ function App() {
   const [images, setImages] = useState([]);
 
   // - variable to store current image
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // EFFECTS
   // - fetch data from the API
@@ -37,21 +37,42 @@ function App() {
   }
 
   function buttonPrev() {
-    console.log("I was cliqued.");
+    //* What does the previous button do: When I click a button, I want the current image to move one step back in the queue so to speak
+    //* meaning the image index needs to reduce by one, until it hits the lowest number possible (0) and at that point i want it to overflow
+    //* meaning that the image index needs to then become the largest possible number, which is the length of the array minus 1 (bc arrays start at index 0)
+    // if currentImageIndex - 1 < 0, setCurrentImageIndex(images.length - 1)
+    //set currentImageIndex to currentImageIndex + 1
+
+    if (currentImageIndex - 1 < 0) {
+      setCurrentImageIndex(images.length - 1);
+    } else {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
   }
 
   function buttonNext() {
-    console.log("I was cliqued.");
+    //* What does the next button do:
+    // if currentImageIndex + 1 > images.length -1 setCurrentImageIndex(0)
+    //set currentImageIndex to currentImageIndex + 1
+    if (currentImageIndex + 1 > images.length - 1) {
+      setCurrentImageIndex(0);
+    } else {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
   }
 
-  console.log(images[currentImage]);
+  //! IF USING UNSPLASH API - THE WAY I ACCESS IMAGE DATA CHANGES - line 71/80/81
 
   return (
     <>
       <section className="thumbnail-container">
         {images.map((image) => {
           return (
-            <button key={image.id} onClick={clickThumbnail}>
+            <button
+              className="image-button"
+              key={image.id}
+              onClick={clickThumbnail}
+            >
               <img src={image.url} alt={image.alt} />
             </button>
           );
@@ -60,19 +81,22 @@ function App() {
       <section className="fullscreen-container">
         {/* wrapped in a conditional bc we're checking images.length is not zero - when it is zero we have not received data from the API */}
         {images.length && (
-          <img src={images[currentImage].url} alt={images[currentImage].alt} />
+          <img
+            src={images[currentImageIndex].url}
+            alt={images[currentImageIndex].alt}
+          />
         )}
       </section>
 
       <button
-        onClick={buttonNext}
+        onClick={buttonPrev}
         aria-label="Go to the previous image"
         className="previous"
       >
         {"<"}
       </button>
       <button
-        onClick={buttonPrev}
+        onClick={buttonNext}
         aria-label="Go to the next image"
         className="next"
       >
